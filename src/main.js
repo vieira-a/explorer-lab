@@ -18,6 +18,41 @@ const cvcDefault = "000";
 const cvcText = document.querySelector(".cc-security .value");
 const cvcInput = document.getElementById("security-code");
 
+const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
+const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
+
+const handleCCInputNumber = () => {
+  ccNumberInput.addEventListener('keyup', () => {
+    ccNumberText.textContent = ccNumberInput.value
+    setCCNumber();
+  })
+}
+
+const getCCInputNumber = () => {
+  ccNumberInput.addEventListener('change', () => {
+  ccValidate()
+  })
+}
+
+const ccValidate = () => {
+
+  handleCCInputNumber()
+
+  const ccNumberInputValue = document.getElementById("card-number").value;
+
+  const isVisa = visaRegEx.test(ccNumberInputValue) === true;
+  const isMastercard = mastercardRegEx.test(ccNumberInputValue) === true;
+  
+  let brand = "default"
+  
+  if(isVisa){
+    brand = "visa"
+  } else if(isMastercard) {
+    brand = "mastercard"
+  } 
+  handleCCBrand(brand)
+}
+
 const ccBrands = {
   "default": {
     "imgPath": "../public/cc-default.svg",
@@ -57,30 +92,6 @@ const setCVC = () => {
   }
 }
 
-const handleCCInputNumber = () => {
-
-  let brand = ""
-  
-  ccNumberInput.addEventListener('keyup', () => {
-    let ccNumberArray = []
-    
-    ccNumberText.textContent = ccNumberInput.value
-    ccNumberArray = [...ccNumberInput.value]
-
-    if(ccNumberArray[0] === '5' ){
-      brand = "mastercard"
-    } else if(ccNumberArray[0] === '4'){
-      brand = "visa"
-    } else {
-      brand = "default"
-      setCCNumber()
-    }
-
-    handleCCBrand(brand)
-
-  })
-}
-
 const handleCCBrand = (brand) => {
   ccLogo.innerHTML = `<img src=${ccBrands[brand].imgPath}>`
 }
@@ -110,7 +121,7 @@ setCCNumber();
 setCCHolder();
 setCCExpiration();
 setCVC();
-handleCCInputNumber();
+getCCInputNumber();
 handleCCInputHolder();
 handleCCInputExpiration();
 handleCCInputCVC();
