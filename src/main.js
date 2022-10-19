@@ -7,8 +7,12 @@ const ccNumberText = document.querySelector(".cc-number");
 const ccNumberInput = document.getElementById("card-number");
 
 const ccHolderDefault = "DIGITE O SEU NOME"
-const ccHolderInput = document.getElementById("card-holder")
 const ccHolderText = document.querySelector(".cc-holder .value")
+const ccHolderInput = document.getElementById("card-holder")
+
+const ccExpirationDefault = "00/00";
+const ccExpirationText = document.querySelector(".cc-expiration .value")
+const ccExpirationInput = document.getElementById("expiration-date")
 
 const ccBrands = {
   "default": {
@@ -25,15 +29,21 @@ const ccBrands = {
   },
 }
 
-const handleCCNumber = () => {
+const setCCNumber = () => {
   if(ccNumberText.textContent === ''){
     ccNumberText.textContent = ccNumberDefault
   } 
 }
 
-const handleCCHolder = () => {
+const setCCHolder = () => {
   if(ccHolderText.textContent === '') {
     ccHolderText.textContent = ccHolderDefault
+  }
+}
+
+const setCCExpiration = () => {
+  if(ccExpirationText.textContent === '') {
+    ccExpirationText.textContent = ccExpirationDefault
   }
 }
 
@@ -53,7 +63,7 @@ const handleCCInputNumber = () => {
       brand = "visa"
     } else {
       brand = "default"
-      handleCCNumber()
+      setCCNumber()
     }
 
     handleCCBrand(brand)
@@ -68,10 +78,20 @@ const handleCCBrand = (brand) => {
 const handleCCInputHolder = () => {
   ccHolderInput.addEventListener('keyup', () => {
     ccHolderText.textContent = ccHolderInput.value
-    handleCCHolder();
+    setCCHolder();
   })
 }
-handleCCNumber()
-handleCCHolder();
-handleCCInputHolder()
-handleCCInputNumber()
+
+const handleCCInputExpiration = () => {
+  ccExpirationInput.addEventListener('keyup', () => {
+    ccExpirationText.textContent = ccExpirationInput.value
+    setCCExpiration()
+  })
+}  
+
+setCCNumber();
+setCCHolder();
+setCCExpiration();
+handleCCInputNumber();
+handleCCInputHolder();
+handleCCInputExpiration();
