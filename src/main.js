@@ -1,5 +1,7 @@
 import "./css/index.css"
 
+const ccNumberDefault = "1234 5678 9012 3456";
+const ccNumber = document.querySelector(".cc-number");
 const ccLogo = document.querySelector(".cc-logo :nth-child(2)");
 const ccInput = document.getElementById("card-number");
 
@@ -22,19 +24,31 @@ const ccBrands = [
 ]
 
 const handleCCNumber = () => {
+  if(ccNumber.textContent === ''){
+    ccNumber.textContent = ccNumberDefault
+  } 
+}
+
+const handleCCInputNumber = () => {
+  handleCCNumber()
+
   let brand = ""
   
   ccInput.addEventListener('keyup', () => {
     let ccInputNumber = []
-    ccNumber.push(Number(ccInput.value))
+    
+    ccNumber.textContent = ccInput.value
+    ccInputNumber = [...ccInput.value]
 
-    if(ccInputNumber[0] === 5){
+    if(ccInputNumber[0] === '5' ){
       brand = "mastercard"
-    } else if(ccInputNumber[0] === 4){
+    } else if(ccInputNumber[0] === '4'){
       brand = "visa"
     } else {
       brand = "default"
+      handleCCNumber()
     }
+
     handleCCBrand(brand)
 
   })
@@ -52,4 +66,4 @@ const handleCCBrand = (brand) => {
 
 }
 
-handleCCNumber()
+handleCCInputNumber()
