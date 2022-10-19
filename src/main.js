@@ -1,9 +1,12 @@
 import "./css/index.css"
 
 const ccNumberDefault = "1234 5678 9012 3456";
-const ccNumber = document.querySelector(".cc-number");
+const ccHolderDefault = "DIGITE O SEU NOME"
+const ccNumberText = document.querySelector(".cc-number");
 const ccLogo = document.querySelector(".cc-logo :nth-child(2)");
-const ccInput = document.getElementById("card-number");
+const ccNumberInput = document.getElementById("card-number");
+const ccHolderInput = document.getElementById("card-holder")
+let ccHolderText = document.querySelector(".cc-holder .value")
 
 const ccBrands = {
   "default": {
@@ -21,9 +24,15 @@ const ccBrands = {
 }
 
 const handleCCNumber = () => {
-  if(ccNumber.textContent === ''){
-    ccNumber.textContent = ccNumberDefault
+  if(ccNumberText.textContent === ''){
+    ccNumberText.textContent = ccNumberDefault
   } 
+}
+
+const handleCCHolderText = () => {
+  if(ccHolderText.innerHTML === '') {
+    ccHolderText.innerHTML = ccHolderDefault
+  }
 }
 
 const handleCCInputNumber = () => {
@@ -31,15 +40,15 @@ const handleCCInputNumber = () => {
 
   let brand = ""
   
-  ccInput.addEventListener('keyup', () => {
-    let ccInputNumber = []
+  ccNumberInput.addEventListener('keyup', () => {
+    let ccNumberArray = []
     
-    ccNumber.textContent = ccInput.value
-    ccInputNumber = [...ccInput.value]
+    ccNumberText.textContent = ccNumberInput.value
+    ccNumberArray = [...ccNumberInput.value]
 
-    if(ccInputNumber[0] === '5' ){
+    if(ccNumberArray[0] === '5' ){
       brand = "mastercard"
-    } else if(ccInputNumber[0] === '4'){
+    } else if(ccNumberArray[0] === '4'){
       brand = "visa"
     } else {
       brand = "default"
@@ -55,4 +64,12 @@ const handleCCBrand = (brand) => {
   ccLogo.innerHTML = `<img src=${ccBrands[brand].imgPath}>`
 }
 
+const handleCCHolder = () => {
+  ccHolderInput.addEventListener('keyup', () => {
+    ccHolderText.innerHTML = ccHolderInput.value
+    handleCCHolderText()
+  })
+}
+
+handleCCHolder()
 handleCCInputNumber()
