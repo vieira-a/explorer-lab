@@ -1,12 +1,14 @@
 import "./css/index.css"
 
-const ccNumberDefault = "1234 5678 9012 3456";
-const ccHolderDefault = "DIGITE O SEU NOME"
-const ccNumberText = document.querySelector(".cc-number");
 const ccLogo = document.querySelector(".cc-logo :nth-child(2)");
+
+const ccNumberDefault = "1234 5678 9012 3456";
+const ccNumberText = document.querySelector(".cc-number");
 const ccNumberInput = document.getElementById("card-number");
+
+const ccHolderDefault = "DIGITE O SEU NOME"
 const ccHolderInput = document.getElementById("card-holder")
-let ccHolderText = document.querySelector(".cc-holder .value")
+const ccHolderText = document.querySelector(".cc-holder .value")
 
 const ccBrands = {
   "default": {
@@ -29,14 +31,13 @@ const handleCCNumber = () => {
   } 
 }
 
-const handleCCHolderText = () => {
-  if(ccHolderText.innerHTML === '') {
-    ccHolderText.innerHTML = ccHolderDefault
+const handleCCHolder = () => {
+  if(ccHolderText.textContent === '') {
+    ccHolderText.textContent = ccHolderDefault
   }
 }
 
 const handleCCInputNumber = () => {
-  handleCCNumber()
 
   let brand = ""
   
@@ -64,12 +65,13 @@ const handleCCBrand = (brand) => {
   ccLogo.innerHTML = `<img src=${ccBrands[brand].imgPath}>`
 }
 
-const handleCCHolder = () => {
+const handleCCInputHolder = () => {
   ccHolderInput.addEventListener('keyup', () => {
-    ccHolderText.innerHTML = ccHolderInput.value
-    handleCCHolderText()
+    ccHolderText.textContent = ccHolderInput.value
+    handleCCHolder();
   })
 }
-
-handleCCHolder()
+handleCCNumber()
+handleCCHolder();
+handleCCInputHolder()
 handleCCInputNumber()
