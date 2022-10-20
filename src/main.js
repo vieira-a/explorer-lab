@@ -5,13 +5,13 @@ const maskCCNumber = {
   mask: '0000 0000 0000 0000'
 }
 
-// const maskCCExpiration = {
-//   mask: '00/00'
-// }
+const maskCCExpiration = {
+  mask: '00/00'
+}
 
-// const maskCCCVV = {
-//   mask: '0000'
-// }
+const maskCCCVV = {
+  mask: '0000'
+}
 
 const ccLogo = document.querySelector(".cc-logo :nth-child(2)");
 const ccNumberDefault = "1234 5678 9012 3456";
@@ -59,14 +59,15 @@ const ccValidate = () => {
   
   if(isVisa){
     brand = "visa"
-    console.log(`Cartão Visa | Tipo de dado: ${typeof(ccNumberInputValue)}`)
   } else if(isMastercard) {
     brand = "mastercard"
-    console.log(`Cartão Mastercard | Tipo de dado: ${typeof(ccNumberInputValue)}`)
   } else {
-    console.log(`Cartão Desconhecido | Tipo de dado: ${typeof(ccNumberInputValue)}`)
   }
   handleCCBrand(brand)
+}
+
+const handleCCBrand = (brand) => {
+  ccLogo.innerHTML = `<img src=${ccBrands[brand].imgPath}>`
 }
 
 const ccBrands = {
@@ -108,10 +109,6 @@ const setCVC = () => {
   }
 }
 
-const handleCCBrand = (brand) => {
-  ccLogo.innerHTML = `<img src=${ccBrands[brand].imgPath}>`
-}
-
 const handleCCInputHolder = () => {
   ccHolderInput.addEventListener('keyup', () => {
     ccHolderText.textContent = ccHolderInput.value
@@ -120,17 +117,17 @@ const handleCCInputHolder = () => {
 }
 
 const handleCCInputExpiration = () => {
+  const ccExpirationMasked = IMask(ccExpirationInput, maskCCExpiration)
   ccExpirationInput.addEventListener('keyup', () => {
-    //const ccExpirationMasked = IMask(ccExpirationInput, maskCCExpiration)
-    ccExpirationText.textContent = ccExpirationInput.value
+    ccExpirationText.textContent = ccExpirationMasked.value
     setCCExpiration()
   })
 }
 
 const handleCCInputCVC = () => {
+  const cvcInputMasked = IMask(cvcInput, maskCCCVV)
   cvcInput.addEventListener('keyup', () => {
-    //const cvcInputMasked = IMask(cvcInput, maskCCCVV)
-    cvcText.textContent = cvcInput
+    cvcText.textContent = cvcInputMasked.value
     setCVC()
   })
 }
